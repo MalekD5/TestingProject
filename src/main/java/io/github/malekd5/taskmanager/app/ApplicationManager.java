@@ -2,6 +2,8 @@ package io.github.malekd5.taskmanager.app;
 
 import io.github.malekd5.taskmanager.auth.AuthService;
 import io.github.malekd5.taskmanager.auth.User;
+import io.github.malekd5.taskmanager.exceptions.InvalidPasswordException;
+import io.github.malekd5.taskmanager.exceptions.InvalidUsernameException;
 import io.github.malekd5.taskmanager.tasks.TaskManager;
 import io.github.malekd5.taskmanager.utils.ValidationUtils;
 
@@ -21,11 +23,11 @@ public class ApplicationManager {
 
     public void register(String username, String password) {
         if (!ValidationUtils.isValidUsername(username) ) {
-            throw new IllegalArgumentException("Username must be at least 5 characters");
+            throw new InvalidUsernameException("Username must be at least 5 characters");
         }
 
         if (!ValidationUtils.isValidPassword(password)) {
-            throw new IllegalArgumentException("Password must be at least 6 characters");
+            throw new InvalidPasswordException("Password must be at least 6 characters");
         }
 
         this.authService.registerUser(username, password);
@@ -33,7 +35,7 @@ public class ApplicationManager {
 
     public void login(String username, String password) {
         if (isLoggedIn()) {
-            return;
+            throw new IllegalStateException("already logged in");
         }
 
         Optional<User> optionalUser = this.authService.loginUser(username, password);

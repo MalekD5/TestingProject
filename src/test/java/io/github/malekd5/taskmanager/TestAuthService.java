@@ -2,6 +2,7 @@ package io.github.malekd5.taskmanager;
 
 import io.github.malekd5.taskmanager.auth.AuthService;
 import io.github.malekd5.taskmanager.auth.User;
+import io.github.malekd5.taskmanager.exceptions.DuplicateUsernameException;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -26,7 +27,7 @@ public class TestAuthService {
 
     @Test
     public void testRegisterShouldThrow() {
-        assertThrows(IllegalArgumentException.class,
+        assertThrows(DuplicateUsernameException.class,
                 () -> authService.registerUser("malek", "123456"));
     }
 

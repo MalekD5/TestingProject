@@ -21,7 +21,7 @@ public class Main {
 
         while (true) {
             if (applicationManager.isLoggedIn()) {
-                System.out.printf("(%s) > ", applicationManager.getLoggedInUser().getUsername());
+                System.out.printf("(%s) > ", applicationManager.getLoggedInUser().username());
             } else {
                 System.out.print("> ");
             }

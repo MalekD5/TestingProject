@@ -18,7 +18,6 @@ public class CommandManager {
         this.commandMap.put("login", new LoginCommand(manager));
         this.commandMap.put("register", new RegisterCommand(manager));
         this.commandMap.put("task", new TaskMainCommand(manager));
-        this.commandMap.put("logout", new LogoutCommand(manager));
     }
 
     public Optional<ICommand> getCommand(String command) {

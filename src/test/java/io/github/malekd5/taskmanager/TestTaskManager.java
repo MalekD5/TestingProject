@@ -20,6 +20,10 @@ public class TestTaskManager {
     @BeforeAll
     public static void setUpOnce() {
         taskManager = new TaskManager();
+
+        taskManager.addTask(new Task("Test12",
+                "test description 2",
+                SPORTS_CATEGORY, 1));
     }
 
     @Test
@@ -35,6 +39,20 @@ public class TestTaskManager {
         assertTrue(task.isPresent());
     }
 
+
+    @Test
+    public void testRemoveTask() {
+        String taskName = "Test1";
+
+        Optional<Task> taskOptional = taskManager.getTask(taskName);
+
+        assertTrue(taskOptional.isPresent());
+
+        Task task = taskOptional.get();
+
+        assertTrue(taskManager.deleteTask(task));
+    }
+
     @Test
     public void testGetTasksByPriority() {
         int priority = 1;
@@ -46,24 +64,21 @@ public class TestTaskManager {
         List<Task> tasksPriority1 = taskManager.
                 getTasksByPriority(priority);
 
-        assertEquals(1, tasksPriority1.size());
+        assertEquals(2, tasksPriority1.size());
     }
 
     @Test
     public void testGetTasksByCategory() {
-        taskManager.addTask(new Task("Test12",
-                "test description 2",
-                SPORTS_CATEGORY, 1));
 
         List<Task> tasksCategorySports = taskManager.
                 getTasksByCategory(SPORTS_CATEGORY);
 
-        assertEquals(2, tasksCategorySports.size());
+        assertEquals(1, tasksCategorySports.size());
     }
 
     @Test
     public void testMarkTaskAsCompleted() {
-        String taskName = "Test1";
+        String taskName = "Test12";
 
         assertDoesNotThrow(() -> taskManager.markTaskAsCompleted(taskName));
     }
@@ -74,19 +89,6 @@ public class TestTaskManager {
 
         assertThrows(IllegalArgumentException.class,
                 () -> taskManager.markTaskAsCompleted(taskName));
-    }
-
-    @Test()
-    public void testRemoveTask() {
-        String taskName = "Test1";
-
-        Optional<Task> taskOptional = taskManager.getTask(taskName);
-
-        assertTrue(taskOptional.isPresent());
-
-        Task task = taskOptional.get();
-
-        assertTrue(taskManager.deleteTask(task));
     }
 
 }
